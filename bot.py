@@ -56,4 +56,4 @@ async def player_error(ctx, error):
     else:
         raise error
 # This just runs our bot
-bot.run("NzA3MTI3Njc2NDIyMzI0MjY1.XrEgTw.epY884bFVX7L8rMmDpRHhySKNzY") # Replace 'token' with the bot token you generated earlier.
+bot.run("") # Replace 'token' with the bot token you generated earlier.
