@@ -35,9 +35,9 @@ async def status(ctx, name):
         await ctx.send("Player not online.")
 
     else:
-        game_type = hypixelcustomwrapper.get_gametype(name)
-        game_mode = hypixelcustomwrapper.get_gamemode(name)
-        await ctx.send(f"Online: True" + "\n" + f"Game: {game_type}" + "\n" + f"Mode: {game_mode}")
+        onlinestatus = hypixelcustomwrapper.get_session(name)
+        await ctx.send(f"{onlinestatus}")
+
 
 
 @status.error
@@ -48,12 +48,5 @@ async def cooldown_error(ctx, error):
     else:
         raise error
 
-@status.error
-async def player_error(ctx, error):
-    if isinstance(error, commands.errors.CommandInvokeError.JSONDecodeError):
-        msg = 'Player does not exist.'
-        await ctx.send(msg)
-    else:
-        raise error
-# This just runs our bot
-bot.run("") # Replace 'token' with the bot token you generated earlier.
+
+bot.run("NzA3MTI3Njc2NDIyMzI0MjY1.XrP7LQ.S9fd_TtK8mGPL0SJwF6SoBY9kcY") # Replace 'token' with the bot token you generated earlier.

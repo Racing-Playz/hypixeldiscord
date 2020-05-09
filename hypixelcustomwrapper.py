@@ -16,8 +16,6 @@ GROWTH_DIVIDES_2 = 2 / GROWTH
 
 
 
-
-
 def get_level(name):
     url = f"https://api.hypixel.net/player?key={API_KEY}&name={name}"
     res = requests.get(url)
@@ -26,6 +24,8 @@ def get_level(name):
         return None
     exp = int(data["player"]["networkExp"]) # This just gets the player experience from our data
     return math.floor(1 + REVERSE_PQ_PREFIX + math.sqrt(REVERSE_CONST + GROWTH_DIVIDES_2 * exp)) # This converts Hypixel EXP to a network level
+
+
 
 def get_session(name):
     url1 = f"https://api.mojang.com/users/profiles/minecraft/{name}"
@@ -37,7 +37,6 @@ def get_session(name):
     returnUuid = (data["id"])
 
     url2 = f"https://api.hypixel.net/status?key={API_KEY}&uuid=" + returnUuid
-    url3 = f"https://api.hypixel.net/player?key={API_KEY}&uuid=" + returnUuid
 
     res = requests.get(url2)
     data = res.json()
@@ -48,64 +47,18 @@ def get_session(name):
     onlinestatus = (data["session"]["online"])
 
 
-    if onlinestatus is None:
-        return None
+    if onlinestatus is False:
+        return False
     else:
-        return onlinestatus
+        onlinestatus_string = "Online: "
+        gameType_string = "Game: "
+        gameMode_string = "Mode: "
+        newLinestring = "\n"
 
+        game_type = (data["session"]["gameType"])
+        game_mode = (data["session"]["mode"])
+        return onlinestatus_string + str(onlinestatus) + newLinestring + gameType_string + game_type + newLinestring + gameMode_string + game_mode
 
-
-
-
-
-def get_gametype(name):
-    url1 = f"https://api.mojang.com/users/profiles/minecraft/{name}"
-
-    res = requests.get(url1)
-    data = res.json()
-    if data["id"] is None:
-        return None
-    returnUuid = (data["id"])
-
-    url2 = f"https://api.hypixel.net/status?key={API_KEY}&uuid=" + returnUuid
-
-    res = requests.get(url2)
-    data = res.json()
-    if data["session"] is None:
-        return None
-
-    game_type = (data["session"]["gameType"])
-
-    if game_type is None:
-        return None
-
-    else:
-        return game_type
-
-
-def get_gamemode(name):
-    url1 = f"https://api.mojang.com/users/profiles/minecraft/{name}"
-
-    res = requests.get(url1)
-    data = res.json()
-    if data["id"] is None:
-        return None
-    returnUuid = (data["id"])
-
-    url2 = f"https://api.hypixel.net/status?key={API_KEY}&uuid=" + returnUuid
-
-    res = requests.get(url2)
-    data = res.json()
-    if data["session"] is None:
-        return None
-
-    game_mode = (data["session"]["mode"])
-
-    if game_mode is None:
-        return None
-
-    else:
-        return game_mode
 
 
 
