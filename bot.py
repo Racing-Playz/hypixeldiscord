@@ -1,9 +1,10 @@
-#API KEY bd04adbb-7afc-42da-a833-09dbf09fbf06
-# bot.py
 import discord
 import hypixelcustomwrapper
 from discord.ext import commands # This is just an extension to make commands a lot easier
 import requests
+from datetime import datetime, timezone
+import json
+import time
 
 bot = commands.Bot(command_prefix='=') # You can set your prefix to be anything you desire!
 
@@ -34,11 +35,10 @@ async def status(ctx, name):
     if onlinestatus == False:
         await ctx.send("Player not online.")
 
+
     else:
         onlinestatus = hypixelcustomwrapper.get_session(name)
         await ctx.send(f"{onlinestatus}")
-
-
 
 @status.error
 async def cooldown_error(ctx, error):
@@ -49,4 +49,4 @@ async def cooldown_error(ctx, error):
         raise error
 
 
-bot.run("NzA3MTI3Njc2NDIyMzI0MjY1.XrP7LQ.S9fd_TtK8mGPL0SJwF6SoBY9kcY") # Replace 'token' with the bot token you generated earlier.
+bot.run("") # Replace 'token' with the bot token you generated earlier.
