@@ -1,6 +1,6 @@
 import discord
 
-from hcommands import plevel, pstatus, pfriendcount, pguild, precentgames
+from hcommands import plevel, pstatus, pfriendcount, pguild, precentgames, pbedwarstats, pduelstats
 
 from discord.ext import commands # This is just an extension to make commands a lot easier
 import requests
@@ -75,6 +75,28 @@ async def recgames(ctx, name):
 
     else:
         await ctx.send(f"{regames}")
+
+@bot.command(name="bwstats")
+@commands.cooldown(1, 6, commands.BucketType.user)
+async def bwstat(ctx, name):
+    bw_stat = pbedwarstats.get_bedwars_stats(name)
+
+    if bw_stat is None:
+        return None
+
+    else:
+        await ctx.send(f"{bw_stat}")
+
+@bot.command(name="duelstats")
+@commands.cooldown(1, 6, commands.BucketType.user)
+async def bwstat(ctx, name):
+    duel_stat = pduelstats.get_duels_stats(name)
+
+    if duel_stat is None:
+        return None
+
+    else:
+        await ctx.send(f"{duel_stat}")
 
 @status.error
 async def cooldown_error(ctx, error):
