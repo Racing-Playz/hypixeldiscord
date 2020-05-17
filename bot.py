@@ -1,8 +1,10 @@
 import discord
-import hypixelcustomwrapper
+
+from hcommands import plevel, pstatus, pfriendcount, pguild, precentgames
+
 from discord.ext import commands # This is just an extension to make commands a lot easier
 import requests
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 import json
 import time
 
@@ -18,7 +20,7 @@ async def on_ready(): # This function will be run by the discord library when th
 
 @bot.command()
 async def level(ctx, name): # The name of this function will be the name of the command. 'ctx' just provides context we can use, and all arguments after that are just arguments sent by the command
-    level = hypixelcustomwrapper.get_level(name) # This is a reference the function we just created in hypixel.py
+    level = plevel.get_level(name) # This is a reference the function we just created in hypixel.py
     if level is None: # Remember back in hypixel.py we returned 'None' if the API couldn't find a player
         await ctx.send("Player not found! (Make sure to use their **Minecraft** username)") # This just sends a message to the channel the command was sent in from the bot
     else: # We know that we found a player now because level is not None
@@ -29,7 +31,7 @@ async def level(ctx, name): # The name of this function will be the name of the 
 @bot.command(name="status")
 @commands.cooldown(1, 6, commands.BucketType.user)
 async def status(ctx, name):
-    onlinestatus = hypixelcustomwrapper.get_session(name)
+    onlinestatus = pstatus.get_session(name)
 
 
     if onlinestatus == False:
@@ -37,8 +39,42 @@ async def status(ctx, name):
 
 
     else:
-        onlinestatus = hypixelcustomwrapper.get_session(name)
+        onlinestatus = pstatus.get_session(name)
         await ctx.send(f"{onlinestatus}")
+
+
+@bot.command(name="fc")
+@commands.cooldown(1, 6, commands.BucketType.user)
+async def fc(ctx, name):
+    friends_counter = pfriendcount.get_friend_count(name)
+
+    if friends_counter is None:
+        return None
+
+    else:
+        await ctx.send(f"{friends_counter}")
+        
+@bot.command(name="guild")
+@commands.cooldown(1, 6, commands.BucketType.user)
+async def guildinfo(ctx, name):
+    pguild_info = pguild.get_guild_info(name)
+
+    if pguild_info is None:
+        return None
+
+    else:
+        await ctx.send(f"{pguild_info}")
+
+@bot.command(name="recentgames")
+@commands.cooldown(1, 6, commands.BucketType.user)
+async def recgames(ctx, name):
+    regames = precentgames.get_recent_games(name)
+
+    if regames is None:
+        return None
+
+    else:
+        await ctx.send(f"{regames}")
 
 @status.error
 async def cooldown_error(ctx, error):
