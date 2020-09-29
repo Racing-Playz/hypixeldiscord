@@ -10,7 +10,7 @@ import time
 
 bot = commands.Bot(command_prefix='=') # You can set your prefix to be anything you desire!
 
-botName = "Deagan"
+botName = "DisHypixel-Stats"
 
 @bot.event
 async def on_ready(): # This function will be run by the discord library when the bot has logged in
@@ -107,4 +107,4 @@ async def cooldown_error(ctx, error):
         raise error
 
 
-bot.run("NzYwNTcyNDUwNDg3NTMzNjA5.X3OASg.nAnbPTNFYsOx3o72Vpjd3euJN9s") # Replace 'token' with the bot token you generated earlier.
+bot.run("NzYwNTcyNDUwNDg3NTMzNjA5.X3OASg.Jip0Qw31xITc9qa5cvwPdX4a_0M") # Replace 'token' with the bot token you generated earlier.
