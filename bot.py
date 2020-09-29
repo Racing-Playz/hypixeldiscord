@@ -107,4 +107,4 @@ async def cooldown_error(ctx, error):
         raise error
 
 
-bot.run("") # Replace 'token' with the bot token you generated earlier.
+bot.run("NzYwNTcyNDUwNDg3NTMzNjA5.X3OASg.nAnbPTNFYsOx3o72Vpjd3euJN9s") # Replace 'token' with the bot token you generated earlier.
